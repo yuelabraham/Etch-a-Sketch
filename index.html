@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <button id="reset">Reset Grid</button>
     <div id="container">
 
     </div>
@@ -15,11 +16,40 @@
 
     <script>
         const container = document.querySelector("#container")
-        for (let i = 0; i < 16 * 16; i++){
-            const cell = document.createElement("div")
-            cell.classList.add("grid-cell")
-            container.appendChild(cell)
+        const resetButton = document.querySelector("#reset")
+
+        function createGrid(size){
+            container.innerHTML = ""
+            const cellSize = 960 / size
+
+            for(let i = 0; i < size * size; i++){
+                let cell = document.createElement("div")
+                cell.classList.add("grid-cell")
+                cell.style.width = `${cellSize}px`
+                cell.style.height = `${cellSize}px`
+
+                cell.addEventListener("mouseenter", () => {
+                    cell.style.backgroundColor = "black"
+                })
+
+                container.append(cell)
+            }
         }
+
+        createGrid(16)
+        
+         
+        resetButton.addEventListener("click", () => {
+            let newSize = prompt("Enter grid size (1-100)")
+            newSize = parseInt(newSize)
+
+            if (newSize && newSize > 0 && newSize <= 100){
+                createGrid(newSize)
+            }
+            else{
+                alert("Invalid size, please read constraints")
+            }
+        })
     </script>
 </body>
 </html>
